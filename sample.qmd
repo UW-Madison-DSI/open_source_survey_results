@@ -1,0 +1,151 @@
+---
+title: "Sample Characteristics"
+---
+
+<!-- Setup -->
+
+```{r}
+source('setup.R')
+```
+
+`r nrow(survey_results)` respondents finished the survey, broken out by affiliation and role below:
+
+```{r}
+plotly_treemap_df <- survey_results |>  
+  group_by(type = QID4, division = QID8) |> 
+  summarise(n = n()) |> 
+  mutate(
+    type = ifelse(is.na(type), 'Unaffiliated', type),
+    division = ifelse(is.na(division), 'Unaffiliated', division)
+  )
+
+plotly_treemap_df <- plotly_treemap_df |> 
+  bind_rows(
+    survey_results |> 
+      group_by(type = QID8) |> 
+      summarise(n = n()) |> 
+      mutate(
+        type = ifelse(is.na(type), 'Unaffiliated', type)
+      )
+  ) |> 
+  mutate(ids = ifelse(is.na(division), type, paste0(division, "_", type))) |>  
+  select(ids, everything()) |> 
+  mutate(
+    ids = ifelse(is.na(ids), "", ids),
+    division = ifelse(is.na(division), "", division),
+    type = ifelse(is.na(type), "", type),
+    n = as.double(n)
+  )
+
+plot_ly(type = "treemap", 
+        data = plotly_treemap_df,
+        labels = ~type,
+        parents = ~division,
+        ids = ~ids,
+        values = ~n,
+        hoverinfo = "text",
+        hovertemplate = "<b>%{parent}</b><br>Type: %{label}<br>Responses: %{value}<extra></extra>",
+        textposition = "inside", insidetextanchor = "middle",
+        textfont = list(size = 14),
+        branchvalues = "total"
+        ) |> 
+  layout(title = "Survey Respondents",
+         plot_bgcolor  = background_color,
+         paper_bgcolor = background_color)
+```
+
+<b>`r round((sum(survey_results$QID22 == 'Yes', na.rm = TRUE) / nrow(survey_results) * 100))`%</b> of respondents said they have contributed to open source projects, either academically or personally.
+
+```{r}
+c1_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4)) |> 
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID22, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = n() / nrow(survey_results))
+
+c1_df |>
+  plot_ly(
+    x = ~ QID22,
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(c1_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+### Faculty and Staff
+
+Of these respondents, `r nrow(survey_results[survey_results$QID4 == 'Faculty'|survey_results$QID4 == 'Staff',])` identified as faculty or staff (`r round(nrow(survey_results[survey_results$QID4 == 'Faculty'|survey_results$QID4 == 'Staff',]) / nrow(survey_results), 2) * 100`% of respondents). 
+
+Faculty and staff respondents were distributed in tenure (years served) at the university as below:
+
+```{r}
+tenure_gg <- survey_results |> 
+  mutate(QID6 = factor(QID6, 
+                       levels = c('0-1 years', '1-3 years', '4-7 years', '7-10 years', '10+ years'))) |> 
+  filter(QID4 %in% c('Faculty', 'Staff')) |> 
+  ggplot(aes(y = QID6)) +
+  geom_bar(fill = primary_color
+           ) +
+  scale_y_discrete(limits = rev) +
+  labs(
+    y = 'Years Served',
+    x = 'Respondents'
+  ) +
+  facet_wrap(vars(QID4)) +
+  bar_coord_flip_theme
+
+ggplotly(tenure_gg, tooltip = 'count')
+```
+
+### Students
+
+`r nrow(survey_results[survey_results$QID4 == 'Graduate Student'|survey_results$QID4 == 'Undergraduate Student',])` respondents identified at students (`r round(nrow(survey_results[survey_results$QID4 == 'Graduate Student'|survey_results$QID4 == 'Undergraduate Student',]) / nrow(survey_results), 2) * 100`% of respondents). Students came from degree programs in the following subjects:
+
+```{r}
+major_gg <- survey_results |> 
+  filter(QID4 %in% c('Graduate Student', 'Undergraduate Student')) |> 
+  mutate(
+    QID4 = ifelse(QID4 == 'Graduate Student', 'Graduate', 'Undergraduate'),
+    QID7 = str_to_title(QID7),
+    QID7 = str_replace_all(QID7, '&', 'And'),
+    QID7 = str_remove_all(QID7, ' Phd')) |>
+  # Manually clean up some majors
+  mutate(
+    QID7 = case_when(
+      QID7 == 'Ag And Applied Economics' ~ 'Applied And Agricultural Economics',
+      QID7 == 'Communication Sciences And Disorders (Csd)' ~ 'Communication Sciences And Disorders',
+      QID7 == 'Computer Sciences' ~ 'Computer Science',
+      QID7 == 'Industrial And Systems Engineering Phd' ~ 'Industrial & Systems Engineering',
+      QID7 == 'Math' ~ 'Mathematics',
+      QID7 == 'Nurtritional Sciences' ~ 'Nutrition Science',
+      is.na(QID7) ~ 'Not Provided',
+      TRUE ~ QID7
+    )
+  ) |> 
+  ggplot(aes(y = reorder(QID7, QID7,
+                     function(x) length(x)))) +
+  geom_bar(fill = primary_color) +
+  scale_x_continuous(breaks = pretty_breaks()) +
+  labs(
+    y = 'Major',
+    x = 'Respondents'
+  ) +
+  facet_wrap(vars(QID4)) +
+  bar_coord_flip_theme
+
+ggplotly(major_gg, tooltip = 'count')
+```

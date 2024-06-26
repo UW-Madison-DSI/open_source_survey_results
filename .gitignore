@@ -1,0 +1,8 @@
+# General Files
+.Rhistory
+*.Rproj
+.Rproj.user/
+.DS_Store
+
+# Directories
+/.quarto/

@@ -1,0 +1,35 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
+
+// fonts
+$font-family-sans-serif: "Red Hat Text", FreeSerif, serif !default;
+$RedHatDisplay: "Red Hat Display", sans-serif, bold;
+
+// colors
+$primary-color: #c5050c;
+$accent-red: #9B0000;
+$background-grey: #F7F7F7;
+$link-blue: #0479A8;
+$text-grey: #333333;
+$chunk-white: #fff;
+
+// element stylings
+$navbar-bg: $primary-color; // navbar background
+$body-bg: $background-grey; // body background
+$body-color: $text-grey; // body text
+$link-color: $link-blue; // hyperlinks
+$code-bg: $chunk-white; // inline code background color
+$code-color: $accent-red; // inline code text color
+
+// header styling
+h1, h2 {
+  color: $text-grey;
+  font-family: $RedHatDisplay;
+  font-weight: 800;
+};
+
+.navbar-title {
+  font-family: $RedHatDisplay;
+  font-weight: 800;
+}

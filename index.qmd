@@ -1,0 +1,13 @@
+---
+title: "Home"
+---
+
+<!-- Setup -->
+
+```{r}
+source('setup.R')
+```
+
+The [Open Source Program Office at UW-Madison](https://ospo.wisc.edu/) distributed an open source survey in Spring 2024 to gauge the usage of open source tools among members of the university community, identify open source projects under development, and to collect feedback on improving the open source environment at UW-Madison.
+
+This site summarizes the findings of the results and allows users to explore how campus community members use open source tools at `r uni_name`.

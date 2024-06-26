@@ -1,0 +1,315 @@
+---
+title: "Usage of Open-Source Tools"
+---
+
+<!-- Setup -->
+
+```{r}
+source('setup.R')
+```
+
+### Familiarity with Open Source Tools
+
+We asked respondents how familiar they are with the concepts of open source...
+
+```{r}
+# Software
+f1_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4),
+         QID11 = factor(QID11, levels = c(
+           'Extremely familiar',
+           'Very familiar',
+           'Moderately familiar',
+           'Slightly familiar',
+           'Not familiar at all'
+         ))) |> 
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID11, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results)) 
+
+# Hardware
+f2_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4),
+         QID10 = factor(QID10, levels = c(
+           'Extremely familiar',
+           'Very familiar',
+           'Moderately familiar',
+           'Slightly familiar',
+           'Not familiar at all'
+         ))) |>  
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID10, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results)) 
+
+# Teaching tools
+f3_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4),
+         QID12 = factor(QID12, levels = c(
+           'Extremely familiar',
+           'Very familiar',
+           'Moderately familiar',
+           'Slightly familiar',
+           'Not familiar at all'
+         ))) |> 
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID12, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results)) 
+```
+
+::: {.panel-tabset}
+
+### ...software
+
+Examples of open source software include [Python](https://www.python.org/) and [git](https://git-scm.com/)
+
+```{r}
+f1_df |>
+  plot_ly(
+    x = ~ QID11,
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(f1_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+### ...hardware
+
+[Arduino boards](https://www.arduino.cc/) are an example of open source hardware
+
+```{r}
+f2_df |>
+  plot_ly(
+    x = ~ QID10,
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(f2_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+### ...teaching tools
+
+[Khan Academy](https://www.khanacademy.org/) and [MIT OpenCourseWare](https://ocw.mit.edu/) are examples of open source teaching tools.
+
+```{r}
+f3_df |>
+  plot_ly(
+    x = ~ QID12,
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(f3_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+:::
+
+### What Open Source Tools Do Respondents Use?
+
+**`r round(length(survey_results$QID13[survey_results$QID13 == 'Yes']) / nrow(survey_results), 2) * 100`%** of respondents identified open source tools that are key in their workflows or their fields.
+
+Tools respondents identified included:
+
+```{r}
+# Set words and other characters to remove manually
+rm_terms <- c(
+  'open', 'and', 'source', 'analysis', 'use', 'used', 'data', 'many', 'software',
+  'programming', 'language', 'languages', 'tools', 'code', 'etc', 'package',
+  'packages', 'list', 'everything', 'including', '•', 'libraries', 'like',
+  'various', 'research', 'statistical', 'ecosystem', 'opensource', 'web',
+  'google', 'system', 'compilers', 'academy', 'numerous', 'systems'
+)
+
+# Prepare free-text responses for analysis
+tools_corpus <- Corpus(VectorSource(survey_results$QID15))
+tools_corpus <- tm_map(tools_corpus, tolower)
+tools_corpus <- tm_map(tools_corpus, removeWords, stopwords("english"))
+tools_corpus <- tm_map(tools_corpus, removePunctuation)
+tools_corpus <- tm_map(tools_corpus, removeWords, rm_terms)
+```
+
+```{r, eval=FALSE}
+# If desired, remove 'eval=FALSE'
+wordcloud(tools_corpus
+        , scale = c(5,0.5)     # Set min and max scale
+        , max.words = 50      # Set top n words
+        , random.order = FALSE # Words in decreasing freq
+        , rot.per = 0.35       # % of vertical words
+        , use.r.layout = FALSE # Use C++ collision detection
+        , colors = brewer.pal(12, "Dark2"))
+```
+
+```{r}
+# Manually select tools that you want to highlight (if desired)
+tools_highlight <- c('python', 'r', 'julia', 'git', 'latex')
+
+# Re-format text response corpus as a dataframe for lollipop plotting
+tools_corpus_df <- TermDocumentMatrix(tools_corpus) |> 
+  as.matrix()
+
+tools_corpus_df <- sort(rowSums(tools_corpus_df), decreasing = TRUE)
+tools_corpus_df <- data.frame(word = names(tools_corpus_df), freq = tools_corpus_df)
+
+t1 <- tools_corpus_df |> 
+  filter(word != '•') |> 
+  head(25) |> 
+  arrange(freq) |> 
+  mutate(Tool = factor(word, word),
+         pct = freq / nrow(survey_results)) |> 
+  ggplot(aes(x = pct, y = Tool)) +
+    geom_segment(
+      aes(x = Tool, xend = Tool, y = 0, yend = pct, 
+      color = ifelse(Tool %in% tools_highlight, primary_color, dark_accent)),
+    ) +
+    geom_point(
+      aes(x = Tool, y = pct,
+          text = paste0("Tool: ", Tool, " \n Percent: ", round(pct * 100, 2), '%'),
+          color = ifelse(Tool %in% tools_highlight, primary_color, dark_accent))
+    ) +
+    theme_minimal() +
+    scale_y_continuous(labels = scales::percent_format()) +
+    scale_color_identity() +
+    coord_flip() +
+    xlab("") +
+    ylab("Responses Identifying Open Source Tool Use") +
+    lollipop_theme
+
+ggplotly(t1, tooltip = c('text')) |> 
+  layout(yaxis = list(hoverformat = '.2f'))
+```
+
+</br>
+
+Note that these are respondents' answers so not all tools may actually be open-source tools.
+
+### How Are Respondents Using University-Provided Licensed Software?
+
+We asked respondents which university-provided licensed software they use that are available in the university's software library.
+
+```{r}
+# Manually select tools that you want to highlight (if desired)
+licensed_highlight <- c('Matlab', 'STATA')
+
+licensed_corpus <- survey_results |> 
+  mutate(QID17_split = str_split(QID17, ',')) |> 
+  select(tool = QID17_split) |> 
+  unnest(tool) |> 
+  group_by(tool) |> 
+  summarise(freq = n()) |> 
+  mutate(tool = ifelse(is.na(tool), 'None', tool))
+
+l1 <- licensed_corpus |> 
+  # head(25) |> 
+  arrange(freq) |> 
+  mutate(word = factor(tool, tool),
+         pct = freq / nrow(survey_results)) |> 
+  ggplot() +
+    geom_segment(
+      aes(x = word, xend = tool, y = 0, yend = pct, 
+      color = ifelse(tool %in% licensed_highlight, primary_color, dark_accent)),
+    ) +
+    geom_point(
+      aes(x = tool, y = pct,
+          text = paste0("Tool: ", tool, " \n Percent: ", round(pct * 100, 2), '%'),
+          color = ifelse(tool %in% licensed_highlight, primary_color, dark_accent))
+    ) +
+    theme_minimal() +
+    scale_y_continuous(labels = scales::percent_format()) +
+    scale_color_identity() +
+    coord_flip() +
+    xlab("") +
+    ylab("Responses Identifying Licensed Tool Use") +
+    lollipop_theme
+
+ggplotly(l1, tooltip = c('text'))
+```
+
+### Usage of Open Source Tools vs. Licensed Tools
+
+Additionally, we asked respondents if they use open-source tools more than, as much as, or less than the licensed software provided by the university.
+
+```{r}
+u1_df <- survey_results |>
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4)) |>
+  mutate(
+    QID40_clean = case_when(
+      QID40 == 'I use open source software much more than the licensed software in CSL' ~ 'Use OS more than licensed',
+      QID40 == 'I use open source software much less than the licensed software in CSL' ~ 'Use OS less than licensed',
+      QID40 == 'I use open source software about the same as the licensed software in CSL' ~ 'About the same',
+      QID40 == 'N/A, I don\'t use either' ~ 'Use neither',
+      TRUE ~ QID40
+    ),
+    QID40_clean = factor(QID40_clean, 
+                         levels = c(
+                           'Use OS more than licensed',
+                           'About the same',
+                           'Use OS less than licensed',
+                           'Use neither'
+                         )
+                           )
+  ) |>
+  rename(`Respondent Type` = QID4) |>
+  group_by(QID40_clean, `Respondent Type`) |>
+  summarise(Count = n())
+
+u1_df |>
+  plot_ly(
+    x = ~ QID40_clean,
+    y = ~ Count,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(u1_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff'
+    )
+  )
+```
+

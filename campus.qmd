@@ -1,0 +1,175 @@
+---
+title: "Open Source On Campus"
+---
+
+<!-- Setup -->
+
+```{r}
+source('setup.R')
+```
+
+### Perceptions of Open Source Culture On Campus
+
+We asked survey takers if they felt that having a vibrant open source culture on campus is important and if they felt that `r uni_name` has a vibrant open source culture:
+
+::: {.panel-tabset}
+
+```{r}
+c1_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4),
+         QID24 = factor(QID24, levels = c(
+          'Very valuable',
+          'Some value',
+          'Neutral',
+          'No value'
+         ))) |> 
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID24, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results)) 
+
+c2_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4),
+         QID23 = factor(QID23, levels = c(
+          'Strongly agree',
+          'Somewhat agree',
+          'Neither agree nor disagree',
+          'Somewhat disagree',
+          'Strongly disagree'
+         ))) |> 
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID23, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results)) 
+```
+
+### "A vibrant OS culture is valuable"
+
+```{r}
+c1_df |>
+  plot_ly(
+    x = ~ QID24,
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(c1_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+### "`r uni_name` has a vibrant OS culture"
+
+```{r}
+c2_df |>
+  plot_ly(
+    x = ~ QID23,
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(c1_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+:::
+
+**`r round(length(survey_results$QID19[survey_results$QID19 == 'Yes']) / nrow(survey_results), 2) * 100`%** of respondents agreed that **"it makes sense for the university to contribute to open source software that is vital to its educational and research enterprise"** (`r round(length(survey_results$QID19[survey_results$QID19 == 'Not sure']) / nrow(survey_results), 2) * 100`% were "unsure," and `r round(length(survey_results$QID19[survey_results$QID19 == 'No']) / nrow(survey_results), 2) * 100`% disagreed).
+
+### Open Source Training On Campus
+
+**`r round(length(survey_results$QID25[survey_results$QID25 == 'Yes']) / nrow(survey_results), 2) * 100`%** of respondents said that they have received at least some formal training or education on open source software during their time at `r uni_name`. These respondents were distributed by role and affiliation as below:
+
+::: {.panel-tabset}
+
+```{r}
+c3_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4)) |> 
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID25, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results)) 
+
+c4_df <- survey_results |> 
+  mutate(QID8 = ifelse(is.na(QID8), 'Unafilliated', QID8)) |> 
+  rename(`Affiliation` = QID8) |> 
+  group_by(QID25, `Affiliation`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results)) 
+```
+
+### Role
+
+```{r}
+c3_df |>
+  plot_ly(
+    x = ~ QID25,
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(c3_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = paste0('Have received open source training at ', uni_name)),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+### Affiliation
+
+```{r}
+c4_df |>
+  plot_ly(
+    x = ~ QID25,
+    y = ~ Percent,
+    color = ~ `Affiliation`,
+    colors = viridis_pal(option = "D")(length(c4_df$`Affiliation`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = paste0('Have received open source training at ', uni_name)),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    ),
+    hoverlabel = list(namelength = -1)
+  )
+```
+
+:::
+
+**`r round(length(survey_results$QID28[survey_results$QID28 == 'Yes']) / nrow(survey_results), 2) * 100`%** of respondents said that they "would like to see more training, education, or support for learning how to contribute to open source project" and **`r round(length(survey_results$QID29[survey_results$QID29 == 'Yes']) / nrow(survey_results), 2) * 100`%** of respondents expressed interest in potential open source training sessions and workshops organized by the Open Source Program Office.

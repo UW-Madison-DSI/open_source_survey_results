@@ -1,0 +1,171 @@
+---
+title: "Sentiments Around Open-Source Tools"
+---
+
+<!-- Setup -->
+
+```{r}
+source('setup.R')
+```
+
+### Value of Open Source Projects
+
+When asked to characterize the importance of open source tools to their education, teaching, and research, respondents said the following:
+
+```{r}
+s1_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4),
+         QID16 = factor(QID16,
+                        levels = c(
+                          'Critical/Vital/Essential',
+                          'Valuable',
+                          'Neutral',
+                          'Little importance',
+                          'Irrelevant'
+                        ))) |> 
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID16, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results))
+
+s1_df |>
+  plot_ly(
+    x = ~ QID16,
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(s1_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+Survey takers were also asked how much they agree that 1) open source tools are a valuable form of research output and 2) open source tools are an important way to translate research into entrepreneurship and innovation.
+
+```{r}
+s2_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4),
+         QID20 = factor(QID20, levels = c(
+          'Strongly agree',
+          'Somewhat agree',
+          'Neither agree nor disagree',
+          'Somewhat disagree',
+          'Strongly disagree'
+         ))) |> 
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID20, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results)) 
+
+s3_df <- survey_results |> 
+  mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4),
+         QID21 = factor(QID21, levels = c(
+          'Strongly agree',
+          'Somewhat agree',
+          'Neither agree nor disagree',
+          'Somewhat disagree',
+          'Strongly disagree'
+         ))) |> 
+  rename(`Respondent Type` = QID4) |> 
+  group_by(QID21, `Respondent Type`) |> 
+  summarise(Count = n(),
+            Percent = Count / nrow(survey_results)) 
+```
+
+::: {.panel-tabset}
+
+### "OS is a valuable research output"
+
+```{r}
+s2_df |>
+  plot_ly(
+    x = ~ reorder(QID20, desc(Percent)),
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(s2_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+### "OS translates research into innovation"
+
+```{r}
+s3_df |>
+  plot_ly(
+    x = ~ reorder(QID21, desc(Percent)),
+    y = ~ Percent,
+    color = ~ `Respondent Type`,
+    colors = viridis_pal(option = "D")(length(s3_df$`Respondent Type`))
+  ) |>
+  add_bars() |>
+  layout(
+    barmode = 'stack',
+    plot_bgcolor = background_color,
+    paper_bgcolor = background_color,
+    xaxis = list(title = ''),
+    yaxis = list(
+      zerolinecolor = '#ffff',
+      zerolinewidth = 2,
+      gridcolor = 'ffff',
+      tickformat = ".1%"
+    )
+  )
+```
+
+:::
+
+### Benefits of Open Source Tools in Academic Settings
+
+We asked survey respondents to choose among a list of potential benefits of using open-source tools in their work. Of the survey-takers who identified benefits, the percentage of respondents who identified each benefit are shown below:
+
+```{r}
+
+s4 <- survey_results |> 
+  select(ResponseId, QID18) |> 
+  separate_rows(QID18, sep = ',') |> 
+  group_by(Benefit = QID18) |> 
+  summarise(count = n(),
+            pct = count/nrow(survey_results)) |> 
+  mutate(Benefit = ifelse(is.na(Benefit), 'None', Benefit)) |> 
+  arrange(desc(pct)) |> 
+  ggplot() +
+    geom_segment(
+      aes(x = reorder(Benefit, pct), xend = reorder(Benefit, pct), y = 0, yend = pct), color = primary_color
+    ) +
+    geom_point(
+      aes(x = Benefit, y = pct, text = paste0(round(pct * 100, 2), '%')), 
+      color = primary_color
+    ) +
+    theme_minimal() +
+    scale_color_identity() +
+    scale_y_continuous(labels = percent_format(), limits = c(0,1)) +
+    coord_flip() +
+    xlab("") +
+    ylab("Percent of Respondents Agreeing with Benefits of Using Open Source Software") +
+    lollipop_theme
+
+ggplotly(s4, tooltip = c('text'))
+
+```

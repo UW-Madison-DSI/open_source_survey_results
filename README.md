@@ -1,2 +1,5 @@
-# open_source_survey_results
-A Quarto site for presenting results from Open Source Program Office surveys
+# 2024 UW-Madison Open Source Program Office Survey
+
+In Spring 2024 the [Open Source Program Office at UW-Madison](https://ospo.wisc.edu/) distributed an open source survey to gauge the usage of open source tools among members of the university community, identify open source projects under development, and to collect feedback on improving the open source environment at UW-Madison. This repo is for a [Quarto site](https://quarto.org/) for summarizing and presenting results from the survey.
+
+This site uses the [UW Quarto site template](https://github.com/UW-Madison-DSI/uw_quarto_site_template). University theming can be customized using the `custom.scss` and `setup.R` files. Plot theming is generally handled in `setup.R`. Other customizations, such as highlighting specific open source tools in response plots, are handled in the appropriate page files (such as `usage.qmd`).
