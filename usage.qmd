@@ -1,5 +1,5 @@
 ---
-title: "Usage of Open-Source Tools"
+title: "Usage"
 ---
 
 <!-- Setup -->

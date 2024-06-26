@@ -8,10 +8,14 @@ title: "Sample Characteristics"
 source('setup.R')
 ```
 
-`r nrow(survey_results)` respondents finished the survey, broken out by affiliation and role below:
+`r nrow(survey_results)` respondents finished the survey, broken out by role and affiliation below:
+
+::: {.panel-tabset}
+
+### Role
 
 ```{r}
-plotly_treemap_df <- survey_results |>  
+plotly_treemap_role_df <- survey_results |>  
   group_by(type = QID4, division = QID8) |> 
   summarise(n = n()) |> 
   mutate(
@@ -19,7 +23,53 @@ plotly_treemap_df <- survey_results |>
     division = ifelse(is.na(division), 'Unaffiliated', division)
   )
 
-plotly_treemap_df <- plotly_treemap_df |> 
+plotly_treemap_role_df <- plotly_treemap_role_df |> 
+  bind_rows(
+    survey_results |> 
+      group_by(division = QID4) |> 
+      summarise(n = n()) |> 
+      mutate(
+        division = ifelse(is.na(division), 'Unaffiliated', division)
+      )
+  ) |> 
+  mutate(ids = ifelse(is.na(type), division, paste0(type, "_", division))) |>  
+  select(ids, everything()) |> 
+  mutate(
+    ids = ifelse(is.na(ids), "", ids),
+    division = ifelse(is.na(division), type, division),
+    type = ifelse(is.na(type), "", type),
+    n = as.double(n)
+  )
+
+plot_ly(type = "treemap", 
+        data = plotly_treemap_role_df,
+        labels = ~division,
+        parents = ~type,
+        ids = ~ids,
+        values = ~n,
+        hoverinfo = "text",
+        hovertemplate = "<b>%{parent}</b><br>Type: %{label}<br>Responses: %{value}<extra></extra>",
+        textposition = "inside", # insidetextanchor = "middle",
+        textfont = list(size = 14),
+        branchvalues = "total"
+        ) |> 
+  layout(title = "Survey Respondents",
+         plot_bgcolor  = background_color,
+         paper_bgcolor = background_color)
+```
+
+### Affiliation
+
+```{r}
+plotly_treemap_affiliation_df <- survey_results |>  
+  group_by(type = QID4, division = QID8) |> 
+  summarise(n = n()) |> 
+  mutate(
+    type = ifelse(is.na(type), 'Unaffiliated', type),
+    division = ifelse(is.na(division), 'Unaffiliated', division)
+  )
+
+plotly_treemap_affiliation_df <- plotly_treemap_affiliation_df |> 
   bind_rows(
     survey_results |> 
       group_by(type = QID8) |> 
@@ -38,7 +88,7 @@ plotly_treemap_df <- plotly_treemap_df |>
   )
 
 plot_ly(type = "treemap", 
-        data = plotly_treemap_df,
+        data = plotly_treemap_affiliation_df,
         labels = ~type,
         parents = ~division,
         ids = ~ids,
@@ -53,6 +103,8 @@ plot_ly(type = "treemap",
          plot_bgcolor  = background_color,
          paper_bgcolor = background_color)
 ```
+
+:::
 
 <b>`r round((sum(survey_results$QID22 == 'Yes', na.rm = TRUE) / nrow(survey_results) * 100))`%</b> of respondents said they have contributed to open source projects, either academically or personally.
 
@@ -76,7 +128,7 @@ c1_df |>
     barmode = 'stack',
     plot_bgcolor = background_color,
     paper_bgcolor = background_color,
-    xaxis = list(title = ''),
+    xaxis = list(title = 'Have contributed to open source projects?'),
     yaxis = list(
       zerolinecolor = '#ffff',
       zerolinewidth = 2,

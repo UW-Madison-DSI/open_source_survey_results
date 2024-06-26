@@ -2,12 +2,12 @@
   {
     "objectID": "usage.html",
     "href": "usage.html",
-    "title": "Usage of Open-Source Tools",
+    "title": "Usage",
     "section": "",
     "text": "Familiarity with Open Source Tools\nWe asked respondents how familiar they are with the concepts of open source…\n\n…software…hardware…teaching tools\n\n\nExamples of open source software include Python and git\n\n\n\n\n\n\n\n\nArduino boards are an example of open source hardware\n\n\n\n\n\n\n\n\nKhan Academy and MIT OpenCourseWare are examples of open source teaching tools.\n\n\n\n\n\n\n\n\n\n\n\nWhat Open Source Tools Do Respondents Use?\n84% of respondents identified open source tools that are key in their workflows or their fields.\nTools respondents identified included:\n\n\n\n\n\n\n\nNote that these are respondents’ answers so not all tools may actually be open-source tools.\n\n\nHow Are Respondents Using University-Provided Licensed Software?\nWe asked respondents which university-provided licensed software they use that are available in the university’s software library.\n\n\n\n\n\n\n\n\nUsage of Open Source Tools vs. Licensed Tools\nAdditionally, we asked respondents if they use open-source tools more than, as much as, or less than the licensed software provided by the university.",
     "crumbs": [
       "Results",
-      "Usage of Open-Source Tools"
+      "Usage"
     ]
   },
   {
@@ -15,31 +15,61 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "The Open Source Program Office at UW-Madison distributed an open source survey in Spring 2024 to gauge the usage of open source tools among members of the university community, identify open source projects under development, and to collect feedback on improving the open source environment at UW-Madison.\nThis site summarizes the findings of the results and allows users to explore how campus community members use open source tools at UW-Madison.",
+    "text": "Thanks to a grant from the Alfred P. Sloan Foundation, The University of Wisconsin–Madison Open Source Program Office (OSPO) is positioned to support and grow our vibrant open source ecosystem. The OSPO’s mission is to collaborate with key stakeholders and community members to provide open source learning opportunities, promote best practices, facilitate the use of open source software in research, and make open source–fueled connections between practitioners and adopters on campus and beyond. In Spring 2024, the OSPO distributed an open source survey to gauge the usage of open source tools among members of the university community, identify open source projects under development, and to collect feedback on improving the open source environment at UW-Madison.\nThis site summarizes the findings of the results and allows users to explore how campus community members use open source tools at UW-Madison.\n\n\nView the results\n\n\nWe are open sourcing an anonymized version of the survey itself (in Qualtrics format) and this Quarto-based analysis of the survey results in an effort to streamline such surveys at other university’s and encourage a uniform set of questions and responses that can more easily be aggregated to understand the broader open source ecosystem in academia. If you’re interested in recreating this survey and website for your institution please see the reproduction section.",
     "crumbs": [
       "Home"
     ]
   },
   {
+    "objectID": "reproduction.html",
+    "href": "reproduction.html",
+    "title": "Reproducing the Survey",
+    "section": "",
+    "text": "Both the 2024 UW-Madison open source survey and this Quarto analysis are open source. Instructions for customizing and reproducing this analysis are included here for ease of use.",
+    "crumbs": [
+      "Reproducing the Survey"
+    ]
+  },
+  {
+    "objectID": "reproduction.html#about-the-survey",
+    "href": "reproduction.html#about-the-survey",
+    "title": "Reproducing the Survey",
+    "section": "About the Survey",
+    "text": "About the Survey\nThe 2024 open source survey at UW-Madison was administered with Qualtrics. An anonymized CSV version of the Qualtrics output for this survey is available in the data directory of this site’s Github repository.\n\nExporting Survey Data From Qualtrics\nOnce your survey period is over, you can easily export your survey data. Within the Qualtrics project site for your survey, navigate to “Data and Analysis” \\(\\rightarrow\\) “Export & Import” \\(\\rightarrow\\) “Export Data…” and use the default settings in the options menu (“Download all fields” and “Use choice text”) to export the survey response data as a CSV file.\n\n\n\n\n\n\n\n\n\nSelect “Export data…”\n\n\n\n\n\n\n\nUse the default options in the pop-up download options menu",
+    "crumbs": [
+      "Reproducing the Survey"
+    ]
+  },
+  {
+    "objectID": "reproduction.html#about-the-quarto-site",
+    "href": "reproduction.html#about-the-quarto-site",
+    "title": "Reproducing the Survey",
+    "section": "About the Quarto Site",
+    "text": "About the Quarto Site\nThis Quarto site uses the UW-Madison Quarto Template to conform to UW-Madison brand guidelines. The template is easily customizable to incorporate the color schemes, logos, and typefaces of other institutions.\nAnalysis of survey results is performed within R code chunks within the Quarto files for the appropriate pages. Please note that the the analysis code written for this template is specific to the format of the 2024 UW-Madison open source survey. You will likely need to customize the code to adapt to the format of your survey’s response data.\n\nCustomizing the Site Theming\nMost universities have a brand guidelines webpage that provides the color hex codes and typefaces that conform with the university’s brand identity. custom.scss contains the SASS that styles all elements of the site that are not plots generated by R. You can customize the theme of the Quarto site here using your institution’s brand’s colors and typefaces. Custom fonts can be imported directly from Google Fonts in custom.scss or downloaded and installed locally.\nsetup.R is an R script that loads necessary packages and handles theming of R code output, like plots. Customize the sections of this script that define variables for your institution’s name and color palette. The .qmd files that make up this Quarto site each source this file, so color variables, name, and plot themes customized in setup.R will apply to R output throughout the site.",
+    "crumbs": [
+      "Reproducing the Survey"
+    ]
+  },
+  {
     "objectID": "campus.html",
     "href": "campus.html",
-    "title": "Open Source On Campus",
+    "title": "Campus Culture",
     "section": "",
     "text": "Perceptions of Open Source Culture On Campus\nWe asked survey takers if they felt that having a vibrant open source culture on campus is important and if they felt that UW-Madison has a vibrant open source culture:\n\n“A vibrant OS culture is valuable”“UW-Madison has a vibrant OS culture”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n89% of respondents agreed that “it makes sense for the university to contribute to open source software that is vital to its educational and research enterprise” (11% were “unsure,” and 0% disagreed).\n\n\nOpen Source Training On Campus\n22% of respondents said that they have received at least some formal training or education on open source software during their time at UW-Madison. These respondents were distributed by role and affiliation as below:\n\nRoleAffiliation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n87% of respondents said that they “would like to see more training, education, or support for learning how to contribute to open source project” and 73% of respondents expressed interest in potential open source training sessions and workshops organized by the Open Source Program Office.",
     "crumbs": [
       "Results",
-      "Open Source On Campus"
+      "Campus Culture"
     ]
   },
   {
     "objectID": "sentiments.html",
     "href": "sentiments.html",
-    "title": "Sentiments Around Open-Source Tools",
+    "title": "Perceptions",
     "section": "",
     "text": "Value of Open Source Projects\nWhen asked to characterize the importance of open source tools to their education, teaching, and research, respondents said the following:\n\n\n\n\n\n\nSurvey takers were also asked how much they agree that 1) open source tools are a valuable form of research output and 2) open source tools are an important way to translate research into entrepreneurship and innovation.\n\n“OS is a valuable research output”“OS translates research into innovation”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBenefits of Open Source Tools in Academic Settings\nWe asked survey respondents to choose among a list of potential benefits of using open-source tools in their work. Of the survey-takers who identified benefits, the percentage of respondents who identified each benefit are shown below:",
     "crumbs": [
       "Results",
-      "Sentiments Around Open-Source Tools"
+      "Perceptions"
     ]
   },
   {
@@ -47,7 +77,7 @@
     "href": "sample.html",
     "title": "Sample Characteristics",
     "section": "",
-    "text": "323 respondents finished the survey, broken out by affiliation and role below:\n\n\n\n\n\n\n53% of respondents said they have contributed to open source projects, either academically or personally.\n\n\n\n\n\n\n\nFaculty and Staff\nOf these respondents, 230 identified as faculty or staff (71% of respondents).\nFaculty and staff respondents were distributed in tenure (years served) at the university as below:\n\n\n\n\n\n\n\n\nStudents\n75 respondents identified at students (23% of respondents). Students came from degree programs in the following subjects:",
+    "text": "323 respondents finished the survey, broken out by role and affiliation below:\n\nRoleAffiliation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n53% of respondents said they have contributed to open source projects, either academically or personally.\n\n\n\n\n\n\n\nFaculty and Staff\nOf these respondents, 230 identified as faculty or staff (71% of respondents).\nFaculty and staff respondents were distributed in tenure (years served) at the university as below:\n\n\n\n\n\n\n\n\nStudents\n75 respondents identified at students (23% of respondents). Students came from degree programs in the following subjects:",
     "crumbs": [
       "Sample Characteristics"
     ]

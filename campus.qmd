@@ -1,5 +1,5 @@
 ---
-title: "Open Source On Campus"
+title: "Campus Culture"
 ---
 
 <!-- Setup -->

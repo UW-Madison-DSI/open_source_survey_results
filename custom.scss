@@ -22,6 +22,8 @@ $link-color: $link-blue; // hyperlinks
 $code-bg: $chunk-white; // inline code background color
 $code-color: $accent-red; // inline code text color
 
+/*-- scss:rules --*/
+
 // header styling
 h1, h2 {
   color: $text-grey;
@@ -32,4 +34,18 @@ h1, h2 {
 .navbar-title {
   font-family: $RedHatDisplay;
   font-weight: 800;
+}
+
+// button stylings
+
+.btn {
+  color: $background-grey;
+  background-color: $link-blue; 
+  border-color: $link-blue;
+}
+
+.btn:hover {
+  color: $link-blue;
+  background-color: $background-grey;
+  border-color: $link-blue;
 }

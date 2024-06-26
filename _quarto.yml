@@ -5,6 +5,7 @@ project:
 website:
   title: "2024 Open Source Survey Results"
   favicon: images/favicon.ico
+  page-navigation: TRUE
   navbar:
     logo: images/header-logo.png
     right:
@@ -16,7 +17,7 @@ website:
   page-footer:
     background: dark
     left: UW-Madison Open Source Survey Results [{{< fa brands github title="GitHub octocat logo" >}}](https://github.com/UW-Madison-DSI/open_source_survey_results){target=_blank}
-    right: This website is built with [Quarto](https://quarto.org/){target=_blank} by the [UW Open Source Program Office](https://ospo.wisc.edu/) and the [UW Data Science Institute](https://datascience.wisc.edu/institute/)
+    right: This website is built with [Quarto](https://quarto.org/){target=_blank} by UW-Madison’s [Open Source Program Office](https://ospo.wisc.edu/) and [Data Science Institute](https://datascience.wisc.edu/institute/)
     
 execute:
   echo: false
