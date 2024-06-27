@@ -10,7 +10,7 @@ source('setup.R')
 
 ### Perceptions of Open Source Culture On Campus
 
-**`r round(length(survey_results$QID24[survey_results$QID24 %in% c('Very valuable', 'Some value')]) / nrow(survey_results), 2) * 100`%** of respondents agreed that there's at least some value in a vibrant campus open source culture.
+**`r round(length(survey_results$QID24[survey_results$QID24 == 'Very valuable']) / nrow(survey_results), 2) * 100`%** of respondents said that having a vibrant open source culture is **"very valuable"**.
 
 ```{r}
 c1_df <- survey_results |> 
@@ -54,8 +54,8 @@ c1_df |>
     barmode = 'stack',
     plot_bgcolor = background_color,
     paper_bgcolor = background_color,
-    title = paste0('"Having a vibrant open source culture at ', uni_name, ' is important"'),
-    xaxis = list(title =  ''),
+    title = paste0('Do you see value in having a vibrant culture around open source software?'),
+    xaxis = list(title =  '', tickangle = 25),
     yaxis = list(
       zerolinecolor = '#ffff',
       zerolinewidth = 2,
@@ -65,7 +65,7 @@ c1_df |>
   )
 ```
 
-In comparison, **`r round(length(survey_results$QID23[survey_results$QID23 %in% c('Strongly agree', 'Somewhat agree')]) / nrow(survey_results), 2) * 100`%** respondents agreed that there is a vibrant open source culture at `r uni_name`.
+In comparison, only **`r round(length(survey_results$QID23[survey_results$QID23 %in% c('Strongly agree', 'Somewhat agree')]) / nrow(survey_results), 2) * 100`%** agreed that there is a vibrant open source culture at `r uni_name`.
 
 ```{r}
 c2_df |>
