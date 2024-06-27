@@ -10,9 +10,7 @@ source('setup.R')
 
 ### Perceptions of Open Source Culture On Campus
 
-We asked survey takers if they felt that having a vibrant open source culture on campus is important and if they felt that `r uni_name` has a vibrant open source culture:
-
-::: {.panel-tabset}
+**`r round(length(survey_results$QID24[survey_results$QID24 %in% c('Very valuable', 'Some value')]) / nrow(survey_results), 2) * 100`%** of respondents agreed that there's at least some value in a vibrant campus open source culture.
 
 ```{r}
 c1_df <- survey_results |> 
@@ -43,8 +41,6 @@ c2_df <- survey_results |>
             Percent = Count / nrow(survey_results)) 
 ```
 
-### "A vibrant OS culture is valuable"
-
 ```{r}
 c1_df |>
   plot_ly(
@@ -58,7 +54,8 @@ c1_df |>
     barmode = 'stack',
     plot_bgcolor = background_color,
     paper_bgcolor = background_color,
-    xaxis = list(title = ''),
+    title = paste0('"Having a vibrant open source culture at ', uni_name, ' is important"'),
+    xaxis = list(title =  ''),
     yaxis = list(
       zerolinecolor = '#ffff',
       zerolinewidth = 2,
@@ -68,7 +65,7 @@ c1_df |>
   )
 ```
 
-### "`r uni_name` has a vibrant OS culture"
+In comparison, **`r round(length(survey_results$QID23[survey_results$QID23 %in% c('Strongly agree', 'Somewhat agree')]) / nrow(survey_results), 2) * 100`%** respondents agreed that there is a vibrant open source culture at `r uni_name`.
 
 ```{r}
 c2_df |>
@@ -83,7 +80,8 @@ c2_df |>
     barmode = 'stack',
     plot_bgcolor = background_color,
     paper_bgcolor = background_color,
-    xaxis = list(title = ''),
+    title = paste0('"', uni_name, ' has a vibrant open source culture"'),
+    xaxis = list(title =  ''),
     yaxis = list(
       zerolinecolor = '#ffff',
       zerolinewidth = 2,
@@ -92,8 +90,6 @@ c2_df |>
     )
   )
 ```
-
-:::
 
 **`r round(length(survey_results$QID19[survey_results$QID19 == 'Yes']) / nrow(survey_results), 2) * 100`%** of respondents agreed that **"it makes sense for the university to contribute to open source software that is vital to its educational and research enterprise"** (`r round(length(survey_results$QID19[survey_results$QID19 == 'Not sure']) / nrow(survey_results), 2) * 100`% were "unsure," and `r round(length(survey_results$QID19[survey_results$QID19 == 'No']) / nrow(survey_results), 2) * 100`% disagreed).
 
