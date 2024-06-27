@@ -1,5 +1,5 @@
 ---
-title: "Sample Characteristics"
+title: "Demographics"
 ---
 
 <!-- Setup -->

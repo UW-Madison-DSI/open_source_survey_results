@@ -2,9 +2,9 @@ website:
   sidebar:
     contents:
       - index.qmd
-      - sample.qmd
       - section: Results
         contents:
+        - sample.qmd
         - usage.qmd
         - sentiments.qmd
         - campus.qmd
