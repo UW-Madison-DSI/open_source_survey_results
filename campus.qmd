@@ -54,7 +54,7 @@ c1_df |>
     barmode = 'stack',
     plot_bgcolor = background_color,
     paper_bgcolor = background_color,
-    title = paste0('Do you see value in having a vibrant culture around open source software?'),
+    title = paste0('"Do you see value in having a vibrant culture around open source software?"'),
     xaxis = list(title =  '', tickangle = 25),
     yaxis = list(
       zerolinecolor = '#ffff',
