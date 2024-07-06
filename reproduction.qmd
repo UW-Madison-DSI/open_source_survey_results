@@ -40,5 +40,3 @@ Most universities have a brand guidelines webpage that provides the color hex co
 [`setup.R`](https://github.com/UW-Madison-DSI/open_source_survey_results/blob/main/setup.R) is an R script that loads necessary packages and handles theming of R code output, like plots. Customize the sections of this script that define variables for your institution's name and color palette. The .qmd files that make up this Quarto site each `source` this file, so color variables, names, and plot themes customized in `setup.R` will apply to R output throughout the site.
 
 Some R chunks in the site qmd files, such as in `usage.qmd`, also contain vectors that you can edit to remove unwanted words or characters from free response field analyses or to highlight certain elements of plots.
-
-### 
