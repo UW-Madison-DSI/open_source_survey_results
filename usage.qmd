@@ -43,7 +43,7 @@ f2_df <- survey_results |>
   summarise(Count = n(),
             Percent = Count / nrow(survey_results)) 
 
-# Teaching tools
+# Educational materials
 f3_df <- survey_results |> 
   mutate(QID4 = ifelse(is.na(QID4), 'Unafilliated', QID4),
          QID12 = factor(QID12, levels = c(
@@ -115,9 +115,9 @@ f2_df |>
   )
 ```
 
-### ...teaching tools
+### ...educational materials
 
-[Khan Academy](https://www.khanacademy.org/) and [MIT OpenCourseWare](https://ocw.mit.edu/) are examples of open source teaching tools.
+[Khan Academy](https://www.khanacademy.org/) and [MIT OpenCourseWare](https://ocw.mit.edu/) are examples of open source educational materials.
 
 ```{r}
 f3_df |>
