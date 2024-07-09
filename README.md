@@ -8,7 +8,8 @@ This site uses the [UW Quarto site template](https://github.com/UW-Madison-DSI/u
 
 Quarto sites can be deployed to GitHub Pages either by 1) rendering the site locally and pushing the updated repo to GitHub with Pages set to deploy the site from the `docs` directory or 2) by using GitHub Actions to render the site when pushing updates to the repo. See [Quarto's documentation on deploying Quarto sites to GitHub Pages](https://quarto.org/docs/publishing/github-pages.html#publish-command) for more detail.
 
-This repo is currently configured to use GitHub Actions to deploy the site using the [`quarto-dev/quarto-actions/render`](https://github.com/quarto-dev/quarto-actions/tree/main/render) GitHub Action and using GitHub Actions as the [publishing source for GitHub Pages][GitHub pages publishing source].
-Changes to the site will be automatically deployed from merged PRs to the `main` branch.
+This repo is currently configured so that the deployment is done using GitHub Actions (the GitHub service). 
+ It utilizes a GitHub Action from quarto-dev (specifically [`quarto-dev/quarto-actions/render`](https://github.com/quarto-dev/quarto-actions/tree/main/render)) and another action that GitHub defines as a "publishing source" (see  [publishing source for GitHub Pages][GitHub pages publishing source]).
+
 
 [GitHub pages publishing source]: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow
