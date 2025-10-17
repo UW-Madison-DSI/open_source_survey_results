@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "Please cite this work when using the software."
+type: software
+
+title: "2024 UW–Madison Open Source Program Office Survey"
+authors:
+  - family-names: "Cranmer"
+    given-names: "Kyle"
+    orcid: "https://orcid.org/0000-0002-5769-7094"
+    affiliation: "University of Wisconsin–Madison"
+  - family-names: "Kittinger"
+    given-names: "Allison"
+    orcid: "https://orcid.org/0000-0002-3104-5995"
+    affiliation: "University of Wisconsin–Madison"
+  - family-names: "Baumann"
+    given-names: "Isaac"
+    orcid: "https://orcid.org/0009-0001-4028-1324"
+    affiliation: "University of Wisconsin–Madison"
+  - family-names: "Oros"
+    given-names: "Maria"
+    orcid: "https://orcid.org/0009-0006-2067-4063"
+    affiliation: "University of Wisconsin–Madison"
+  - family-names: "Philbrick"
+    given-names: "Bethany"
+    orcid: "https://orcid.org/0009-0000-0872-5194"
+    affiliation: "University of Wisconsin–Madison"
+  - family-names: "Feickert"
+    given-names: "Matthew"
+    orcid: "https://orcid.org/0000-0003-4124-7862"
+    affiliation: "University of Wisconsin–Madison"
+
+doi: "10.5281/zenodo.17379408"
+repository-code: "https://github.com/UW-Madison-DSI/open_source_survey_results_myst.git"
+url: "https://github.com/UW-Madison-DSI/open_source_survey_results.git"
+license: "MIT"
+keywords:
+  - open source
+  - survey
+  - UW–Madison
+
+abstract: |
+  In Spring 2024, the Open Source Program Office at UW–Madison distributed a survey
+  to gauge the usage of open source tools across the university community, identify
+  projects under development, and collect feedback on improving the open source
+  environment. This repository hosts a Quarto site that summarizes and presents
+  the survey results.
