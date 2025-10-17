@@ -15,3 +15,8 @@ This repo is currently configured so that the deployment is done using GitHub Ac
 [GitHub pages publishing source]: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow
 
 **Companion site (MyST, for python users):** [MyST site](https://uw-madison-dsi.github.io/open_source_survey_results_myst/)
+
+## Citation
+If you use this work, please cite us as
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17379408.svg)](https://doi.org/10.5281/zenodo.17379408)
+
