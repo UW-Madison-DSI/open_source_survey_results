@@ -17,6 +17,25 @@ This repo is currently configured so that the deployment is done using GitHub Ac
 **Companion site (MyST, for python users):** [MyST site](https://uw-madison-dsi.github.io/open_source_survey_results_myst/)
 
 ## Citation
+
 If you use this work, please cite us as
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17379408.svg)](https://doi.org/10.5281/zenodo.17379408)
 
+
+## Reproduce a PDF Report
+
+Follow the steps below to generate the report in PDF format using our markdown.
+
+1. Move report files to the project root
+Locate all files from the latex-report/ directory and move them to the main project root so that Quarto can correctly detect and compile them.
+2. Ensure supporting assets are accessible
+Confirm that any required assets (e.g., images/, before-body.tex, or other .qmd files) are also located in the root directory or properly referenced in _quarto.yml.
+3. Rename the Quarto configuration file
+Rename the file _quarto_report.md to _quarto.yml (or _quarto.md if using a Markdown configuration).
+This ensures Quarto recognizes your project configuration.
+4. Render the PDF report
+Open a terminal in the project directory and run:
+```
+quarto render --to pdf
+```
+Quarto will compile all chapters and assets into a single PDF, which will be saved in the project directory (or in _book/ if you are using a book-type project).
